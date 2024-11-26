@@ -1,0 +1,14 @@
+# 按照readme中的指示找到你的cookie并保存于此
+cookie: ''
+
+# 文件保存的位置，工程有一个示例
+output_path: './articles'
+
+# 是否将图片一并保存到本地
+save_pic_to_local: true
+
+# 将文章meta信息写入到markdown的header部分
+markdown_header_meta:
+  title: title
+  categories: category
+  postTime: date
