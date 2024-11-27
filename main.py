@@ -57,6 +57,7 @@ if __name__ == '__main__':
     
     print(f'Get articles {article_cnt}')
     
+    article_meta_list = []
     
     for article in tqdm(article_list):
         id = article['articleId']
@@ -72,7 +73,7 @@ if __name__ == '__main__':
 
         res_json = json.loads(res.text)['data']
         res_json.update(article)
-        
+        res_json['description'] = repr(res_json['description'])
         del res_json['content']
         markdown_content = res_json['markdowncontent']
         del res_json['markdowncontent']
@@ -91,8 +92,19 @@ if __name__ == '__main__':
         with open(os.path.join(meta_path, id+'.json'), 'w', encoding='utf-8') as fd:
             wjson = json.dumps(res_json, indent=4).encode('utf-8').decode('unicode_escape')
             fd.write(wjson)
-        
+        article_meta_list.append({
+            'id': id,
+            'title': res_json['title'],
+            'postTime': res_json['postTime'],
+            'category': res_json['categories'],
+            'tag': res_json['categories'],
+            'description': res_json['description']
+        })
+    
         # break
+    with open(os.path.join(output_path, 'article_titles.json'), 'w', encoding='utf-8') as fd:
+        wjson = json.dumps(article_meta_list, indent=4).encode('utf-8').decode('unicode_escape')
+        fd.write(wjson)
 
 
 
